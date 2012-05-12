@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <header>
+        <title>configMoip | Moip Pagamentos S.A.</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
+    </header>
+
+    <body>
+
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <b><a class="brand" href="index.html">configMoip</a></b>
+                <ul class="nav">
+                    <li class="divider-vertical"></li>
+                    <li><a href="#">Home</a></li>
+                    <li class="active"><a href="#">Autorizador</a></li>
+                    <li><a href="#">Risco</a></li>
+                    <li><a href="#">Notifica&ccedil;&atilde;o</a></li>
+                    <li><a href="#">Cadastro</a></li>
+                    <li class="divider-vertical"></li>
+                </ul>
+                <a class="navbar-text pull-right">
+                    Tudo o que voc&ecirc; precisa configurar sobre pagamentos online  
+                    <img src="img/moip.png" width="60" height="32" style="padding: 5px"/>                
+                </a>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span1">&nbsp;</div>
+        <div class="span10">
+
+            <div class="page-header">
+                <ul class="breadcrumb">
+                    <li><i class="icon-home"></i> <a href="index.html">configMoip</a> <span class="divider">/</span></li>
+                    <li><a href="autorizador.html">autorizador</a> <span class="divider">/</span></li>
+                    <li class="active">roteamento</li>
+                </ul>
+                <h1>Autorizador</h1>
+                    Configura&ccedil;&otilde;es de roteamento de pagamentos de cart&atilde;o de cr&eacute;dito entre gateways, adquirentes, plataformas e retentativas.
+            </div>
+
+            <div id="page-body">
+
+                <ul id="tabs" class="nav nav-tabs">
+                    <li><a href="#bandeira" data-toggle="tab">Padr&atilde;o por Bandeira</a></li>
+                    <li><a href="#vendedor" data-toggle="tab">Balanceamento por Vendedor</a></li>
+                    <li><a href="#retentativas" data-toggle="tab">Retentativas</a></li>
+                </ul>
+
+                <!-- Exibe Resultado -->
+                <div id="resultado" class="alert"></div>
+                
+                <div id="myTabContent" class="tab-content">
+
+                    <div class="tab-pane fade" id="bandeira">
+                        <h3>Configura&ccedil;&atilde;o padr&atilde;o de roteamento por bandeira</h3>
+                        <br>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>bandeira</th>
+                                    <th>gateway</th>
+                                    <th>adquirente</th>
+                                    <th>plataforma</th>
+                                    <th>tef</th>
+                                    <th>afilia&ccedil;&atilde;o</th>
+                                    <th>tipo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Visa</td>
+                                    <td>Moip</td>
+                                    <td>Cielo</td>
+                                    <td>Ecommerce</td>
+                                    <td><i class="icon-remove"/></td>
+                                    <td>1018727889</td>
+                                    <td>
+                                        <span class="label label-info">produ&ccedil;&atilde;o</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>37</td>
+                                    <td>Visa</td>
+                                    <td>Moip</td>
+                                    <td>Cielo</td>
+                                    <td>Ecommerce</td>
+                                    <td><i class="icon-remove"/></td>
+                                    <td>1018727889</td>
+                                    <td>
+                                        <span class="label label-warning">teste</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Mastercard</td>
+                                    <td>Braspag</td>
+                                    <td>Redecard</td>
+                                    <td>Komerci</td>
+                                    <td><i class="icon-remove"/></td>
+                                    <td>1034543</td>
+                                    <td>
+                                        <span class="label label-info">produ&ccedil;&atilde;o</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>54</td>
+                                    <td>Mastercard</td>
+                                    <td>Braspag</td>
+                                    <td>Redecard</td>
+                                    <td>Komerci</td>
+                                    <td><i class="icon-remove"/></td>
+                                    <td>1034543</td>
+                                    <td>
+                                        <span class="label label-warning">teste</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>7</td>
+                                    <td>Amex</td>
+                                    <td>Moip</td>
+                                    <td>Amex</td>
+                                    <td>AVS</td>
+                                    <td><i class="icon-remove"/></td>
+                                    <td>123123123232</td>
+                                    <td>
+                                        <span class="label label-info">produ&ccedil;&atilde;o</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>75</td>
+                                    <td>Hipercard</td>
+                                    <td>Braspag</td>
+                                    <td>Hipercard</td>
+                                    <td>Hipercard</td>
+                                    <td><i class="icon-ok"/></td>
+                                    <td>1034543</td>
+                                    <td>
+                                        <span class="label label-info">produ&ccedil;&atilde;o</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td>Diners</td>
+                                    <td>Braspag</td>
+                                    <td>Redecard</td>
+                                    <td>Komerci</td>
+                                    <td><i class="icon-remove"/></td>
+                                    <td>1034543</td>
+                                    <td>
+                                        <span class="label label-info">produ&ccedil;&atilde;o</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>74</td>
+                                    <td>Oi Paggo</td>
+                                    <td>Braspag</td>
+                                    <td>Oi Paggo</td>
+                                    <td>Oi Paggo</td>
+                                    <td><i class="icon-remove"/></td>
+                                    <td>1034543</td>
+                                    <td>
+                                        <span class="label label-info">produ&ccedil;&atilde;o</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="vendedor">
+                        <h3>Configura&ccedil;&atilde;o customizada de roteamento por vendedor</h3>
+                        <br>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>vendedor</th>
+                                    <th>porcentagem</th>
+                                    <th>bandeira</th>
+                                    <th>gateway</th>
+                                    <th>adquirente</th>
+                                    <th>plataforma</th>
+                                    <th>tef</th>
+                                    <th>status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <i class="icon-user"></i> Trinity cobran&ccedil;as<br>
+                                        <a class="muted">id: 432981 | login: trinity</a>
+                                    </td>
+                                    <td>100%</td>
+                                    <td>Mastercard</td>
+                                    <td>Moip</td>
+                                    <td>Cielo</td>
+                                    <td>Ecommerce</td>
+                                    <td><i class="icon-remove"/></td>
+                                    <td>
+                                        <span class="label label-success">ativo</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <i class="icon-user"></i> Compre da China<br>
+                                        <a class="muted">id: 23523435 | login: compredachina01</a>
+                                    </td>
+                                    <td>100%</td>
+                                    <td>Mastercard</td>
+                                    <td>Moip</td>
+                                    <td>Cielo</td>
+                                    <td>Ecommerce</td>
+                                    <td><i class="icon-remove"/></td>
+                                    <td>
+                                        <span class="label label-success">ativo</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <i class="icon-user"></i> JogosNow<br>
+                                        <a class="muted">id: 4565 | login: bruno.gambier</a>
+                                    </td>
+                                    <td>50%</td>
+                                    <td>Visa</td>
+                                    <td>Moip</td>
+                                    <td>Redecard</td>
+                                    <td>Komerci</td>
+                                    <td><i class="icon-ok"/></td>
+                                    <td>
+                                        <span class="label label-important">inativo</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <i class="icon-user"></i> Ipiranga<br>
+                                        <a class="muted">id: 5981 | login: ipiranga</a>
+                                    </td>
+                                    <td>100%</td>
+                                    <td>Mastercard</td>
+                                    <td>Moip</td>
+                                    <td>Cielo</td>
+                                    <td>Ecommerce</td>
+                                    <td><i class="icon-remove"/></td>
+                                    <td>
+                                        <span class="label label-success">ativo</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div class="tab-pane fade" id="retentativas">
+                        <h3>Configura&ccedil;&atilde;o de retentativas de autoriza&ccedil;&atilde;o por vendedor</h3>
+                        <br>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>vendedor</th>
+                                    <th>retentativa</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <i class="icon-user"></i> Trinity cobran&ccedil;as<br>
+                                        <a class="muted">id: 432981 | login: trinity</a>
+                                    </td>
+                                    <td><i class="icon-ok"/></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <i class="icon-user"></i> Compre da China<br>
+                                        <a class="muted">id: 23523435 | login: compredachina01</a>
+                                    </td>
+                                    <td><i class="icon-ok"/></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <i class="icon-user"></i> JogosNow<br>
+                                        <a class="muted">id: 4565 | login: bruno.gambier</a>
+                                    </td>
+                                    <td><i class="icon-ok"/></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <i class="icon-user"></i> Ipiranga<br>
+                                        <a class="muted">id: 5981 | login: ipiranga</a>
+                                    </td>
+                                    <td><i class="icon-ok"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <hr>
+                <div class="alert alert-info">
+                    Para alterar qualquer configura&ccedil;&atilde;o de roteamento, entre em contato com o respons&aacute;vel (leonardo@moip.com.br)
+                </div>
+          </div>
+          <div class="span1">&nbsp;</div>
+
+    </div>
+
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap-tab.js"></script>
+    <script type="text/javascript" src="js/config-moip.js"></script>
+  </body>
+</html>

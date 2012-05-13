@@ -12,13 +12,19 @@
             
             $.getJSON("examples/json.txt",
                 function(data){
-                alert(data.length);
                 var retorno=''
                 var qtd = data.length;  
-                for (i = 0; i < qtd; i++){  
-                    retorno += 'id: ' + data[i].id + '<br>';  
-                    retorno += 'bandeira: ' + data[i].bandeira + '<br>';  
-                    retorno += 'gateway: ' + data[i].gateway + '<br>';  
+                for (i = 0; i < qtd; i++){
+                    retorno += '<tr>'
+                    retorno += '    <td id="id">'+data[i].id+'</td>'
+                    retorno += '    <td id="bandeira">'+data[i].bandeira+'</td>'
+                    retorno += '    <td>'+data[i].gateway+'</td>'
+                    retorno += '    <td>'+data[i].adquirente+'</td>'
+                    retorno += '    <td>'+data[i].plataforma+'</td>'
+                    retorno += '    <td>'+data[i].tef+'</td>'
+                    retorno += '    <td>'+data[i].afiliacao+'</td>'
+                    retorno += '    <td>'+data[i].teste+'</td>'
+                    retorno += '</tr>'
                 }
 
                 $("#results").html(retorno);
@@ -79,21 +85,21 @@
                     <div class="tab-pane fade" id="bandeira">
                         <h3>Configura&ccedil;&atilde;o padr&atilde;o de roteamento por bandeira</h3>
                         <br>
-                        <div id="results">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>id</th>
-                                        <th>bandeira</th>
-                                        <th>gateway</th>
-                                        <th>adquirente</th>
-                                        <th>plataforma</th>
-                                        <th>tef</th>
-                                        <th>afilia&ccedil;&atilde;o</th>
-                                        <th>tipo</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>bandeira</th>
+                                    <th>gateway</th>
+                                    <th>adquirente</th>
+                                    <th>plataforma</th>
+                                    <th>tef</th>
+                                    <th>afilia&ccedil;&atilde;o</th>
+                                    <th>tipo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <div id="results">
                                     <tr>
                                         <td id="id">3</td>
                                         <td id="bandeira">Visa</td>
@@ -190,9 +196,9 @@
                                             <span class="label label-info">produ&ccedil;&atilde;o</span>
                                         </td>
                                     </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                </div>
+                            </tbody>
+                        </table>
                     </div>
                     
                     <div class="tab-pane fade" id="vendedor">

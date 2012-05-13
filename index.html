@@ -12,40 +12,55 @@
             
             $.getJSON("examples/json.txt",
                 function(data){
-                var retorno=''
-                var qtd = data.length;  
-                
-                retorno += '<table class="table table-striped">'
-                retorno += '    <thead>'
-                retorno += '        <tr>'
-                retorno += '            <th>id</th>'
-                retorno += '            <th>bandeira</th>'
-                retorno += '            <th>gateway</th>'
-                retorno += '            <th>adquirente</th>'
-                retorno += '            <th>plataforma</th>'
-                retorno += '            <th>tef</th>'
-                retorno += '            <th>afilia&ccedil;&atilde;o</th>'
-                retorno += '            <th>tipo</th>'
-                retorno += '        </tr>'
-                retorno += '    </thead>'
-                retorno += '    <tbody>'
+                    var retorno='';
+                    var iconetef='';
+                    var labelteste='';
+                    var qtd = data.length;
+                    
+                    retorno += '<table class="table table-striped">'
+                    retorno += '    <thead>'
+                    retorno += '        <tr>'
+                    retorno += '            <th>id</th>'
+                    retorno += '            <th>bandeira</th>'
+                    retorno += '            <th>gateway</th>'
+                    retorno += '            <th>adquirente</th>'
+                    retorno += '            <th>plataforma</th>'
+                    retorno += '            <th>tef</th>'
+                    retorno += '            <th>afilia&ccedil;&atilde;o</th>'
+                    retorno += '            <th>tipo</th>'
+                    retorno += '        </tr>'
+                    retorno += '    </thead>'
+                    retorno += '    <tbody>'
 
-                for (i = 0; i < qtd; i++){
-                    retorno += '    <tr>'
-                    retorno += '        <td id="id">'+data[i].id+'</td>'
-                    retorno += '        <td id="bandeira">'+data[i].bandeira+'</td>'
-                    retorno += '        <td>'+data[i].gateway+'</td>'
-                    retorno += '        <td>'+data[i].adquirente+'</td>'
-                    retorno += '        <td>'+data[i].plataforma+'</td>'
-                    retorno += '        <td>'+data[i].tef+'</td>'
-                    retorno += '        <td>'+data[i].afiliacao+'</td>'
-                    retorno += '        <td>'+data[i].teste+'</td>'
-                    retorno += '    </tr>'
-                }
-                
+                    for (i = 0; i < qtd; i++){
 
-                retorno += '    <tbody>'
-                retorno += '</table>'
+                        if(data[i].tef='true') {
+                            iconetef = '<i class="icon-ok"></i>'
+                        } else {
+                            iconetef = '<i class="icon-remove"></i>'
+                        }
+
+                        if(data[i].teste='true') {
+                            labelteste = '<span class="label label-warning">teste</span>'
+                        } else {
+                            labelteste = '<span class="label label-info">produ&ccedil;&atilde;o</span>'
+                        }
+                        
+                        retorno += '    <tr>'
+                        retorno += '        <td id="id">'+data[i].id+'</td>'
+                        retorno += '        <td id="bandeira">'+data[i].bandeira+'</td>'
+                        retorno += '        <td>'+data[i].gateway+'</td>'
+                        retorno += '        <td>'+data[i].adquirente+'</td>'
+                        retorno += '        <td>'+data[i].plataforma+'</td>'
+                        retorno += '        <td>'+iconetef+'</td>'
+                        retorno += '        <td>'+data[i].afiliacao+'</td>'
+                        retorno += '        <td>'+labelteste+'</td>'
+                        retorno += '    </tr>'
+                    }
+                    
+
+                    retorno += '    <tbody>'
+                    retorno += '</table>'
 
                 $("#results").html(retorno);
             });

@@ -1,0 +1,311 @@
+(function() {
+	var jQuery;
+	
+	var falha = new Array();
+	var errors = new Array();
+	var indice = 0;
+	var URL = "https://desenvolvedor.moip.com.br/sandbox";
+	//var URL = "https://www.homologacao.moip.local";
+
+	var url_request = window.location;
+
+	if (window.jQuery === undefined || window.jQuery.fn.jquery !== '1.7') {
+	    var script_tag = document.createElement('script');
+	    script_tag.setAttribute("type","text/javascript");
+	    script_tag.setAttribute("src", URL + "/scripts/jquery-1.7.min.js");
+	    script_tag.onload = scriptLoadHandler;
+	    script_tag.onreadystatechange = function () {
+	        if (this.readyState == 'complete' || this.readyState == 'loaded') {
+	            scriptLoadHandler();
+	        }
+	    };
+	
+	    (document.getElementsByTagName("head")[0] || document.documentElement).appendChild(script_tag);
+	} else {
+	    jQuery = window.jQuery;
+		jQuery.getScript(URL + "/widget-fb/js/json2.js");
+		jQuery.getScript(URL + "/scripts/util.js");
+	}
+	
+	function scriptLoadHandler() {
+	    jQuery = window.jQuery.noConflict(false);
+		jQuery.getScript(URL + "/widget-fb/js/json2.js");
+		jQuery.getScript(URL + "/scripts/util.js");
+	}
+
+	MoipWidget = function(json) { 
+
+	jQuery(document).ready(function($) {
+	    param = {  
+				pagamentoWidget:{
+					referer : url_request.href,
+		        	token : $("#MoipWidget").attr("data-token"),
+		        	dadosPagamento: json
+				}
+	   };
+		
+	   var service_url = "/rest/pagamento?callback=?"; 
+
+	   validate_before_submit(param);
+	
+       if (errors.length > 0) {
+    	   var callback_error = $("#MoipWidget").attr("callback-method-error");
+    	   __function = eval(callback_error); 
+    	   if (typeof window.__function == "function") {
+	    	   __function(errors);
+	    	   errors = new Array();
+	    	   return;
+       	   }
+       } 
+       
+       var conf = {	
+			url: URL + service_url,
+			type: "GET",
+			dataType: "json", 
+			async: true,
+			data: {"pagamentoWidget":JSON.stringify(param)},
+			headers:{
+				"Content-Type": "application/json",
+				"Accept": "application/json"
+			},
+			success: function(data){
+				
+				if(data.StatusPagamento == "Sucesso"){
+					var callback_success = $("#MoipWidget").attr("callback-method-success");
+					addInfoToanswwer(data);
+		            eval(callback_success)(data);
+				} else {
+					var callback_error = $("#MoipWidget").attr("callback-method-error");
+			        eval(callback_error)(data);
+				}
+			}
+       };
+   	   $.ajax(conf);
+       
+       
+      });
+    };
+	
+	var errorToJson = function(errorCode, errorMessage) {
+		var error = {
+			Codigo: errorCode,
+			Mensagem: errorMessage
+		};
+		errors.push(error);
+	};
+	
+	validate_before_submit = function(json) {
+
+		validate_token(json);
+		if(!jQuery.isFunction(window["validate_" + json.pagamentoWidget.dadosPagamento.Forma])) {
+			errorToJson(900, "Forma inválida");
+			return;
+		}
+		var fn = window["validate_" + json.pagamentoWidget.dadosPagamento.Forma];
+		fn(json);
+	};
+	
+	validate_token = function(json) {
+		if(json.pagamentoWidget.token == undefined || json.pagamentoWidget.token == "") {
+			errorToJson(914, "Token inválido");
+		}
+	};
+	
+	validate_CartaoCredito = function(json) {
+		var parcelas = json.pagamentoWidget.dadosPagamento.Parcelas;
+		validate_credit_card(json);
+		validate_parcelas(parcelas);
+	};
+	
+	validate_BoletoBancario = function(json) {
+
+	};
+	
+	validate_DebitoBancario = function(json) {
+		if (json.pagamentoWidget.dadosPagamento.Instituicao == undefined || json.pagamentoWidget.Instituicao) {
+			errorToJson(901, "Instituição Inválida");
+		} 
+	};
+	
+	validate_vault = function(json) {
+		if(json.cartao.Cofre == undefined || json.cartao.Cofre == ""){
+			errorToJson(913, "Cofre inválido");
+		}
+		
+		if (json.cartao.CodigoSeguranca == undefined || json.cartao.CodigoSeguranca == "" || 
+				isNaN(json.cartao.CodigoSeguranca) || json.cartao.CodigoSeguranca < 3) {
+			errorToJson(907, "Código de segurança inválido");
+		}
+	};
+	
+	validate_credit_card = function(json) {
+		
+		var dados = {cartao:json.pagamentoWidget.dadosPagamento.CartaoCredito};
+
+		if(dados.cartao == undefined || dados.cartao == ""){
+			errorToJson(905, "Informe os dados do cartão de crédito");
+		} else {	
+
+			if(has_vault(dados)){
+				validate_vault(dados);	
+		
+			} else {		
+
+				if(dados.cartao.Numero == undefined || dados.cartao.Numero == "" || 
+						isNaN(dados.cartao.Numero) || dados.cartao.Numero < 13){
+					errorToJson(905, "Número de cartão inválido");
+				} else {
+					//validate_card_brand(dados.cartao.Numero);
+				}
+
+				if(dados.cartao.CodigoSeguranca == undefined || dados.cartao.CodigoSeguranca == "" || 
+						isNaN(dados.cartao.CodigoSeguranca) || dados.cartao.CodigoSeguranca < 3){
+					errorToJson(907, "Código de segurança inválido");
+				} 
+		 
+				validate_data(dados.cartao.Expiracao);
+				validate_portador(dados.cartao.Portador);
+			}
+		}
+	}; 
+	
+	validate_parcelas = function(parcelas){
+	
+		if(parcelas != undefined || parcelas != ""){
+			if(isNaN(parcelas) || parcelas < 1 || parcelas > 15){
+				errorToJson(902, "Número de parcelas inválido");
+			}                  
+		} else {
+		    	errorToJson(902, "Número de parcelas inválido");
+	 	}
+	};
+	
+	validate_portador = function(portador){
+		
+		if(portador.Nome == undefined || portador.Nome == ""){
+			errorToJson(909, "Nome do portador inválido");
+		}
+		
+		if(portador.DataNascimento == undefined || portador.DataNascimento == "" || !validateDate(portador.DataNascimento)){
+			errorToJson(910, "Data nascimento do portador inválido");
+		}
+		
+		if(portador.Telefone == undefined || portador.Telefone == "" || !validatePhone(portador.Telefone)){
+            errorToJson(911, "Telefone do portador inválido");
+		}
+		
+		if(portador.Identidade == undefined || portador.Identidade == "" || !validaCpf(portador.Identidade)){
+			errorToJson(912, "Identidade do portador inválida");
+		}		
+	};
+	
+	function validatePhone(phone) {
+
+		phone = phone.replace("(", "");
+		phone = phone.replace(")", "");
+		phone = phone.replace("-", "");
+		
+		if (isNaN(phone) || phone < 8)
+			return false;
+		
+		if (phone)
+		return true;
+	}
+	
+	function validaCpf(cpf) {
+	
+		var cpfNumber = cpf.charAt(0);
+			
+		for (i = 1; i < cpf.length; i++) {
+			
+			if (!isNaN(cpf.charAt(i)))
+				cpfNumber += cpf.charAt(i);
+		}
+		
+	    if (cpfNumber.length < 11)
+	          return false;
+    
+    	return true;
+    }
+	
+    function validateDate(date) {
+    	
+            if (date !="") {
+                    erro=0;
+                    hoje = new Date();
+                    anoAtual = hoje.getFullYear();
+                    barras = date.split("/");
+                    if (barras.length == 3) {
+                    	
+                            dia = barras[0];
+                            mes = barras[1];
+                            ano = barras[2];
+                            resultado = (!isNaN(dia) && (dia > 0) && (dia < 32)) && (!isNaN(mes) && (mes > 0) && (mes < 13)) && (!isNaN(ano) 
+                            		&& (ano.length == 4) && (ano <= anoAtual && ano >= 1900));
+                            
+                            if (!resultado) {
+                                    return false;
+                            }
+                     } else {
+                             return false;
+                     }
+            return true;
+            }
+            
+            return false;
+    }
+    
+	validate_data = function(data) {
+		
+		if(data == undefined || data == "") {
+			errorToJson(906, "Data de expiração inválida");
+			
+		} else {
+			
+			expirateDate = data.split("/");
+			mes = expirateDate[0];
+			ano = expirateDate[1];
+			
+			if (expirateDate.length != 2 || isNaN(mes) || isNaN(ano)) {
+				errorToJson(906, "Data de expiração deve ser MM/AA");
+			}
+		}	
+		
+	};
+	
+	addInfoToanswwer = function(data) {
+		data["url"] = URL + "/Instrucao.do?token=" + $("#MoipWidget").attr("data-token");
+	};
+	
+	has_vault = function(json) {
+		return json.cartao.Cofre != undefined && json.cartao.Cofre != "";
+	};
+
+	var parcelamento;
+	MoipUtil = { 
+			calcularParcela: function(settings) {
+				parcelamento = settings;
+				var request = { "token": $("#MoipWidget").attr("data-token"), "instituicao" : parcelamento.instituicao };
+				var conf = {	
+						url: URL + "/rest/pagamento/consultarparcelamento?callback=?",
+						type: "GET",
+						dataType: "json", 
+						async: true,
+						data: request,
+						headers:{
+							"Content-Type": "application/json",
+							"Accept": "application/json"
+						},
+						success: function(data){
+							eval(parcelamento.callback)(data);
+						}
+		    	   };
+				$.ajax(conf);
+			}
+	};
+	
+	window.MoipWidget = MoipWidget;
+	window.MoipUtil = MoipUtil;
+
+})();
+

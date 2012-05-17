@@ -4,8 +4,67 @@
         <title>configMoip | Moip Pagamentos S.A.</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-        <link href="google-code-prettify/prettify.css" type="text/css" rel="stylesheet" />
         <link rel="shortcut icon" href="img/palheta_moip.jpg" type="image/x-icon" />
+        <script type="text/javascript" src="js/jquery.js"></script>
+
+
+        <script type="text/javascript">
+            
+            $.getJSON("examples/json.txt",
+                function(data){
+                    var retorno='';
+                    var iconetef='';
+                    var labelteste='';
+                    var qtd = data.length;
+                    
+                    retorno += '<table class="table table-striped">'
+                    retorno += '    <thead>'
+                    retorno += '        <tr>'
+                    retorno += '            <th>id</th>'
+                    retorno += '            <th>bandeira</th>'
+                    retorno += '            <th>gateway</th>'
+                    retorno += '            <th>adquirente</th>'
+                    retorno += '            <th>plataforma</th>'
+                    retorno += '            <th>tef</th>'
+                    retorno += '            <th>afilia&ccedil;&atilde;o</th>'
+                    retorno += '            <th>tipo</th>'
+                    retorno += '        </tr>'
+                    retorno += '    </thead>'
+                    retorno += '    <tbody>'
+
+                    for (i = 0; i < qtd; i++){
+
+                        if(data[i].tef==true) {
+                            iconetef = '<i class="icon-ok"></i>'
+                        } else {
+                            iconetef = '<i class="icon-remove"></i>'
+                        }
+
+                        if(data[i].teste==true) {
+                            labelteste = '<span class="label label-warning">teste</span>'
+                        } else {
+                            labelteste = '<span class="label label-info">produ&ccedil;&atilde;o</span>'
+                        }
+                        
+                        retorno += '    <tr>'
+                        retorno += '        <td id="id">'+data[i].id+'</td>'
+                        retorno += '        <td id="bandeira">'+data[i].bandeira+'</td>'
+                        retorno += '        <td>'+data[i].gateway+'</td>'
+                        retorno += '        <td>'+data[i].adquirente+'</td>'
+                        retorno += '        <td>'+data[i].plataforma+'</td>'
+                        retorno += '        <td>'+iconetef+'</td>'
+                        retorno += '        <td>'+data[i].afiliacao+'</td>'
+                        retorno += '        <td>'+labelteste+'</td>'
+                        retorno += '    </tr>'
+                    }
+                    
+
+                    retorno += '    <tbody>'
+                    retorno += '</table>'
+
+                $("#results").html(retorno);
+            });
+        </script>
     </header>
 
     <body>
@@ -44,6 +103,7 @@
                 </ul>
                 <h1>Roteamento do Autorizador</h1>
                     Configura&ccedil;&otilde;es de roteamento de pagamentos de cart&atilde;o de cr&eacute;dito entre gateways, adquirentes, plataformas e retentativas.
+
             </div>
 
             <div id="page-body">
@@ -59,118 +119,121 @@
                     <div class="tab-pane fade" id="bandeira">
                         <h3>Configura&ccedil;&atilde;o padr&atilde;o de roteamento por bandeira</h3>
                         <br>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>id</th>
-                                    <th>bandeira</th>
-                                    <th>gateway</th>
-                                    <th>adquirente</th>
-                                    <th>plataforma</th>
-                                    <th>tef</th>
-                                    <th>afilia&ccedil;&atilde;o</th>
-                                    <th>tipo</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Visa</td>
-                                    <td>Moip</td>
-                                    <td>Cielo</td>
-                                    <td>Ecommerce</td>
-                                    <td><i class="icon-remove"/></td>
-                                    <td>1018727889</td>
-                                    <td>
-                                        <span class="label label-info">produ&ccedil;&atilde;o</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>37</td>
-                                    <td>Visa</td>
-                                    <td>Moip</td>
-                                    <td>Cielo</td>
-                                    <td>Ecommerce</td>
-                                    <td><i class="icon-remove"/></td>
-                                    <td>1018727889</td>
-                                    <td>
-                                        <span class="label label-warning">teste</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Mastercard</td>
-                                    <td>Braspag</td>
-                                    <td>Redecard</td>
-                                    <td>Komerci</td>
-                                    <td><i class="icon-remove"/></td>
-                                    <td>1034543</td>
-                                    <td>
-                                        <span class="label label-info">produ&ccedil;&atilde;o</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>54</td>
-                                    <td>Mastercard</td>
-                                    <td>Braspag</td>
-                                    <td>Redecard</td>
-                                    <td>Komerci</td>
-                                    <td><i class="icon-remove"/></td>
-                                    <td>1034543</td>
-                                    <td>
-                                        <span class="label label-warning">teste</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>7</td>
-                                    <td>Amex</td>
-                                    <td>Moip</td>
-                                    <td>Amex</td>
-                                    <td>AVS</td>
-                                    <td><i class="icon-remove"/></td>
-                                    <td>123123123232</td>
-                                    <td>
-                                        <span class="label label-info">produ&ccedil;&atilde;o</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>75</td>
-                                    <td>Hipercard</td>
-                                    <td>Braspag</td>
-                                    <td>Hipercard</td>
-                                    <td>Hipercard</td>
-                                    <td><i class="icon-ok"/></td>
-                                    <td>1034543</td>
-                                    <td>
-                                        <span class="label label-info">produ&ccedil;&atilde;o</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>Diners</td>
-                                    <td>Braspag</td>
-                                    <td>Redecard</td>
-                                    <td>Komerci</td>
-                                    <td><i class="icon-remove"/></td>
-                                    <td>1034543</td>
-                                    <td>
-                                        <span class="label label-info">produ&ccedil;&atilde;o</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>74</td>
-                                    <td>Oi Paggo</td>
-                                    <td>Braspag</td>
-                                    <td>Oi Paggo</td>
-                                    <td>Oi Paggo</td>
-                                    <td><i class="icon-remove"/></td>
-                                    <td>1034543</td>
-                                    <td>
-                                        <span class="label label-info">produ&ccedil;&atilde;o</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+
+                        <div id="results">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>id</th>
+                                        <th>bandeira</th>
+                                        <th>gateway</th>
+                                        <th>adquirente</th>
+                                        <th>plataforma</th>
+                                        <th>tef</th>
+                                        <th>afilia&ccedil;&atilde;o</th>
+                                        <th>tipo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td id="id">3</td>
+                                        <td id="bandeira">Visa</td>
+                                        <td>Moip</td>
+                                        <td>Cielo</td>
+                                        <td>Ecommerce</td>
+                                        <td><i class="icon-remove"/></td>
+                                        <td>1018727889</td>
+                                        <td>
+                                            <span class="label label-info">produ&ccedil;&atilde;o</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>37</td>
+                                        <td>Visa</td>
+                                        <td>Moip</td>
+                                        <td>Cielo</td>
+                                        <td>Ecommerce</td>
+                                        <td><i class="icon-remove"/></td>
+                                        <td>1018727889</td>
+                                        <td>
+                                            <span class="label label-warning">teste</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>Mastercard</td>
+                                        <td>Braspag</td>
+                                        <td>Redecard</td>
+                                        <td>Komerci</td>
+                                        <td><i class="icon-remove"/></td>
+                                        <td>1034543</td>
+                                        <td>
+                                            <span class="label label-info">produ&ccedil;&atilde;o</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>54</td>
+                                        <td>Mastercard</td>
+                                        <td>Braspag</td>
+                                        <td>Redecard</td>
+                                        <td>Komerci</td>
+                                        <td><i class="icon-remove"/></td>
+                                        <td>1034543</td>
+                                        <td>
+                                            <span class="label label-warning">teste</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td>Amex</td>
+                                        <td>Moip</td>
+                                        <td>Amex</td>
+                                        <td>AVS</td>
+                                        <td><i class="icon-remove"/></td>
+                                        <td>123123123232</td>
+                                        <td>
+                                            <span class="label label-info">produ&ccedil;&atilde;o</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>75</td>
+                                        <td>Hipercard</td>
+                                        <td>Braspag</td>
+                                        <td>Hipercard</td>
+                                        <td>Hipercard</td>
+                                        <td><i class="icon-ok"/></td>
+                                        <td>1034543</td>
+                                        <td>
+                                            <span class="label label-info">produ&ccedil;&atilde;o</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>Diners</td>
+                                        <td>Braspag</td>
+                                        <td>Redecard</td>
+                                        <td>Komerci</td>
+                                        <td><i class="icon-remove"/></td>
+                                        <td>1034543</td>
+                                        <td>
+                                            <span class="label label-info">produ&ccedil;&atilde;o</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>74</td>
+                                        <td>Oi Paggo</td>
+                                        <td>Braspag</td>
+                                        <td>Oi Paggo</td>
+                                        <td>Oi Paggo</td>
+                                        <td><i class="icon-remove"/></td>
+                                        <td>1034543</td>
+                                        <td>
+                                            <span class="label label-info">produ&ccedil;&atilde;o</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     
                     <div class="tab-pane fade" id="vendedor">
@@ -307,7 +370,6 @@
 
     </div>
 
-    <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/bootstrap-tab.js"></script>
     <script type="text/javascript" src="js/config-moip.js"></script>

@@ -1,71 +1,74 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <header>
+    <head>
         <title>configMoip | Moip Pagamentos S.A.</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
         <link rel="shortcut icon" href="img/palheta_moip.jpg" type="image/x-icon" />
         <script type="text/javascript" src="js/jquery.js"></script>
 
-
         <script type="text/javascript">
             
-            $.getJSON("examples/json.txt",
-                function(data){
-                    var retorno='';
-                    var iconetef='';
-                    var labelteste='';
-                    var qtd = data.length;
-                    
-                    retorno += '<table class="table table-striped">'
-                    retorno += '    <thead>'
-                    retorno += '        <tr>'
-                    retorno += '            <th>id</th>'
-                    retorno += '            <th>bandeira</th>'
-                    retorno += '            <th>gateway</th>'
-                    retorno += '            <th>adquirente</th>'
-                    retorno += '            <th>plataforma</th>'
-                    retorno += '            <th>tef</th>'
-                    retorno += '            <th>afilia&ccedil;&atilde;o</th>'
-                    retorno += '            <th>tipo</th>'
-                    retorno += '        </tr>'
-                    retorno += '    </thead>'
-                    retorno += '    <tbody>'
+ 			var url = 'http://192.168.1.103/paycom/rest/roteamento/bandeira?callback=?';
+			
+            $.getJSON(url, function(data) {
+            
+            	var roteamentos = data.parcelas;
+            	
+				var iconetef='';
+				var labelteste='';
+				var qtd = roteamentos.length;
+				
+				var retorno='';
+				retorno += '<table class="table table-striped">'
+				retorno += '    <thead>'
+				retorno += '        <tr>'
+				retorno += '            <th>id</th>'
+				retorno += '            <th>bandeira</th>'
+				retorno += '            <th>gateway</th>'
+				retorno += '            <th>adquirente</th>'
+				retorno += '            <th>plataforma</th>'
+				retorno += '            <th>tef</th>'
+				retorno += '            <th>afilia&ccedil;&atilde;o</th>'
+				retorno += '            <th>tipo</th>'
+				retorno += '        </tr>'
+				retorno += '    </thead>'
+				retorno += '    <tbody>'
 
-                    for (i = 0; i < qtd; i++){
+				for (i = 0; i < qtd; i++){
 
-                        if(data[i].tef==true) {
-                            iconetef = '<i class="icon-ok"></i>'
-                        } else {
-                            iconetef = '<i class="icon-remove"></i>'
-                        }
+					if(roteamentos[i].tef) {
+						iconetef = '<i class="icon-ok"></i>'
+					} else {
+						iconetef = '<i class="icon-remove"></i>'
+					}
 
-                        if(data[i].teste==true) {
-                            labelteste = '<span class="label label-warning">teste</span>'
-                        } else {
-                            labelteste = '<span class="label label-info">produ&ccedil;&atilde;o</span>'
-                        }
-                        
-                        retorno += '    <tr>'
-                        retorno += '        <td id="id">'+data[i].id+'</td>'
-                        retorno += '        <td id="bandeira">'+data[i].bandeira+'</td>'
-                        retorno += '        <td>'+data[i].gateway+'</td>'
-                        retorno += '        <td>'+data[i].adquirente+'</td>'
-                        retorno += '        <td>'+data[i].plataforma+'</td>'
-                        retorno += '        <td>'+iconetef+'</td>'
-                        retorno += '        <td>'+data[i].afiliacao+'</td>'
-                        retorno += '        <td>'+labelteste+'</td>'
-                        retorno += '    </tr>'
-                    }
-                    
+					if(roteamentos[i].teste) {
+						labelteste = '<span class="label label-warning">teste</span>'
+					} else {
+						labelteste = '<span class="label label-info">produ&ccedil;&atilde;o</span>'
+					}
+					
+					retorno += '    <tr>'
+					retorno += '        <td id="id">'+roteamentos[i].id+'</td>'
+					retorno += '        <td id="bandeira">'+roteamentos[i].bandeira+'</td>'
+					retorno += '        <td>'+roteamentos[i].gateway+'</td>'
+					retorno += '        <td>'+roteamentos[i].adquirente+'</td>'
+					retorno += '        <td>'+roteamentos[i].plataforma+'</td>'
+					retorno += '        <td>'+iconetef+'</td>'
+					retorno += '        <td>'+roteamentos[i].afiliacao+'</td>'
+					retorno += '        <td>'+labelteste+'</td>'
+					retorno += '    </tr>'
+				}
+				
 
-                    retorno += '    <tbody>'
-                    retorno += '</table>'
+				retorno += '    <tbody>'
+				retorno += '</table>'
 
                 $("#results").html(retorno);
             });
         </script>
-    </header>
+    </head>
 
     <body>
 

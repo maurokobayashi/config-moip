@@ -9,11 +9,11 @@
 
         <script type="text/javascript">
             
- 			var url = 'http://192.168.1.103/paycom/rest/roteamento/bandeira?callback=?';
+ 			var url = 'http://192.168.1.105/paycom/rest/roteamentos/bandeiras?callback=?';
 			
             $.getJSON(url, function(data) {
             
-            	var roteamentos = data.parcelas;
+            	var roteamentos = data.roteamentos;
             	
 				var iconetef='';
 				var labelteste='';
@@ -60,7 +60,6 @@
 					retorno += '        <td>'+labelteste+'</td>'
 					retorno += '    </tr>'
 				}
-				
 
 				retorno += '    <tbody>'
 				retorno += '</table>'
